@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Gaji &amp; Tabungan | CalcSpace</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+
+<nav aria-label="Navigasi utama">
+    <a class="active"
+       aria-current="page"
+       th:href="@{/john}">
+        Gaji &amp; Tabungan
+    </a>
+
+    <a th:href="@{/kuadrat}">
+        Persamaan Kuadrat
+    </a>
+</nav>
+
+<h1>Gaji dan Tabungan John Travolta</h1>
+
+<p>
+    Rencanakan keuangan mingguanmu.
+    Jam normal maksimal 40 jam per minggu,
+    dengan tarif lembur 1,5 kali tarif normal.
+</p>
+
+<form th:action="@{/john}" method="post">
+
+    <label for="jam">
+        Jam kerja per minggu
+    </label>
+
+    <input
+            id="jam"
+            name="jam"
+            type="number"
+            min="0"
+            step="0.01"
+            th:value="${jam}"
+            placeholder="Contoh: 52"
+            required>
+
+    <label for="tarif">
+        Tarif normal per jam dalam rupiah
+    </label>
+
+    <input
+            id="tarif"
+            name="tarif"
+            type="number"
+            min="0"
+            step="0.01"
+            th:value="${tarif}"
+            placeholder="Contoh: 15000"
+            required>
+
+    <label for="pengeluaran">
+        Pengeluaran mingguan dalam rupiah
+    </label>
+
+    <input
+            id="pengeluaran"
+            name="pengeluaran"
+            type="number"
+            min="0"
+            step="0.01"
+            th:value="${pengeluaran}"
+            placeholder="Contoh: 600000"
+            required>
+
+    <button type="submit">
+        Hitung Gaji &amp; Tabungan
+    </button>
+
+</form>
+
+<!-- Pesan jika input tidak valid -->
+<p class="error"
+   role="alert"
+   th:if="${error != null}"
+   th:text="${error}">
+</p>
+
+<!-- Ditampilkan sebelum ada hasil perhitungan -->
+<div class="empty-state"
+     th:unless="${hasil == true}">
+
+    <span class="empty-icon" aria-hidden="true">
+        ∑
+    </span>
+
+    <h2>Siap menghitung?</h2>
+
+    <p>
+        Isi jam kerja, tarif, dan pengeluaran,
+        lalu tekan tombol hitung untuk melihat
+        rincian gaji dan tabunganmu.
+    </p>
+
+</div>
+
+<!-- Ditampilkan setelah perhitungan berhasil -->
+<div th:if="${hasil == true}"
+     aria-label="Hasil perhitungan gaji">
+
+    <h2>Hasil Perhitungan</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Komponen</th>
+            <th scope="col">Hasil</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>Jam normal</td>
+            <td th:text="|${jamNormal} jam|"></td>
+        </tr>
+
+        <tr>
+            <td>Jam lembur</td>
+            <td th:text="|${jamLembur} jam|"></td>
+        </tr>
+
+        <tr>
+            <td>Gaji normal</td>
+            <td th:text="${gajiNormal}"></td>
+        </tr>
+
+        <tr>
+            <td>Gaji lembur</td>
+            <td th:text="${gajiLembur}"></td>
+        </tr>
+
+        <tr>
+            <td>Total gaji</td>
+            <td th:text="${totalGaji}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 th:text="${status}"></h3>
+
+    <p th:text="${keterangan}"></p>
+
+</div>
+
+</body>
+</html>

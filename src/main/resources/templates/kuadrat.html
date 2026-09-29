@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Persamaan Kuadrat | CalcSpace</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+
+<nav aria-label="Navigasi utama">
+    <a th:href="@{/john}">
+        Gaji &amp; Tabungan
+    </a>
+
+    <a class="active"
+       aria-current="page"
+       th:href="@{/kuadrat}">
+        Persamaan Kuadrat
+    </a>
+</nav>
+
+<h1>Temukan akar persamaanmu.</h1>
+
+<p>
+    Hitung akar persamaan kuadrat ax² + bx + c = 0.
+    Masukkan koefisien a, b, dan c,
+    dengan nilai a tidak boleh nol.
+</p>
+
+<form th:action="@{/kuadrat}" method="post">
+
+    <label for="a">
+        Koefisien a — pengali x²
+    </label>
+
+    <input
+            id="a"
+            name="a"
+            type="number"
+            step="any"
+            th:value="${a}"
+            placeholder="Contoh: 1"
+            required>
+
+    <label for="b">
+        Koefisien b — pengali x
+    </label>
+
+    <input
+            id="b"
+            name="b"
+            type="number"
+            step="any"
+            th:value="${b}"
+            placeholder="Contoh: -5"
+            required>
+
+    <label for="c">
+        Konstanta c
+    </label>
+
+    <input
+            id="c"
+            name="c"
+            type="number"
+            step="any"
+            th:value="${c}"
+            placeholder="Contoh: 6"
+            required>
+
+    <button type="submit">
+        Hitung Akar Persamaan
+    </button>
+
+</form>
+
+<!-- Pesan jika input tidak valid -->
+<p class="error"
+   role="alert"
+   th:if="${error != null}"
+   th:text="${error}">
+</p>
+
+<!-- Ditampilkan sebelum ada hasil perhitungan -->
+<div class="empty-state"
+     th:unless="${hasil == true}">
+
+    <span class="empty-icon" aria-hidden="true">
+        x²
+    </span>
+
+    <h2>Siap mencari akar?</h2>
+
+    <p>
+        Masukkan koefisien dan tekan tombol hitung.
+        Diskriminan, jenis akar, dan hasil perhitungan
+        akan muncul di sini.
+    </p>
+
+</div>
+
+<!-- Ditampilkan setelah perhitungan berhasil -->
+<div th:if="${hasil == true}"
+     aria-label="Hasil persamaan kuadrat">
+
+    <h2>Hasil Perhitungan</h2>
+
+    <p>
+        Diskriminan D = b² − 4ac:
+        <strong th:text="${d}"></strong>
+    </p>
+
+    <p th:text="${jenis}"></p>
+
+    <p>
+        Akar pertama x₁ =
+        <strong th:text="${x1}"></strong>
+    </p>
+
+    <p>
+        Akar kedua x₂ =
+        <strong th:text="${x2}"></strong>
+    </p>
+
+</div>
+
+</body>
+</html>
